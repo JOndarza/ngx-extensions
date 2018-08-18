@@ -1,0 +1,23 @@
+<extensions-charactercounter maxlength=10 placeholder="..." rows=5 [noResize]="true">
+</extensions-charactercounter>
+
+<br>
+
+<extensions-charactercounter [asInput]="true">
+</extensions-charactercounter>
+
+<br>
+
+<extensions-charactercounter maxlength=8 #test>
+  <ng-template ng-label-tmp let-charNumber="charNumber" let-maxlength="maxlength">
+    <span class="charcounter-label">{{charNumber}} of {{maxlength}}</span>
+  </ng-template>
+</extensions-charactercounter>
+
+<br>
+
+<extensions-charactercounter [asInput]="true" maxlength=3 placeholder="Upss!" [disabled]="true">
+  <ng-template ng-label-tmp let-charNumber="charNumber" let-maxlength="maxlength">
+    <span class="charcounter-label">{{(maxlength - charNumber)}} remaining</span>
+  </ng-template>
+</extensions-charactercounter>
