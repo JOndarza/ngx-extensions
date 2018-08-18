@@ -1,6 +1,7 @@
 {
   "name": "ngx-extensions",
-  "version": "0.0.0",
+  "description": "Extensions for Angular",
+  "version": "0.1.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,6 +10,21 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JOndarza/ngx-extensions.git"
+  },
+  "keywords": [
+    "angular",
+    "extensions",
+    "wrappers"
+  ],
+  "author": "jnondarza@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JOndarza/ngx-extensions/issues"
+  },
+  "homepage": "https://github.com/JOndarza/ngx-extensions.git",
   "private": false,
   "dependencies": {
     "@angular/animations": "^6.0.3",
