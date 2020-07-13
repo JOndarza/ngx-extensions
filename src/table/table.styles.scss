@@ -1,0 +1,42 @@
+.ngc-table.default {
+  border-collapse: collapse;
+  text-align: left;
+  width: 100%;
+
+  th,
+  td {
+    padding: 10px 20px;
+  }
+
+  tr {
+    background: white;
+    border-bottom: 1px solid;
+  }
+
+  @media (max-width: 800px) {
+    thead {
+      position: absolute;
+      visibility: hidden;
+    }
+
+    tr {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+      border-bottom: 0;
+    }
+
+    td {
+      position: relative;
+      width: 50%;
+      border: 1px solid;
+      margin: 0 -1px -1px 0;
+
+      &:before {
+        content: attr(data-title);
+        display: block;
+      }
+    }
+  }
+}

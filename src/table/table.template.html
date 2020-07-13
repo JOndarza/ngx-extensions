@@ -1,0 +1,72 @@
+<ng-template [ngTemplateOutlet]="freezeFirstCol ? tableFreezeFirst : tableDefault">
+</ng-template>
+
+<!-- TEMPLATES -->
+<!-- TYPES -->
+<ng-template #tableFreezeFirst>
+  FREEZE
+  <table class="ngc-table default">
+    <thead>
+      <ng-container *ngFor="let col of cols">
+        <th (click)="headerClick(col)">
+          {{col.title}}
+        </th>
+      </ng-container>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let element of collection; let index = index">
+        <ng-template [ngTemplateOutlet]="rowTemplate || rowsDefault"
+          [ngTemplateOutletContext]="{ element: element, index: index }">
+        </ng-template>
+      </ng-container>
+    </tbody>
+  </table>
+</ng-template>
+
+<ng-template #tableDefault>
+  DEFAULT
+  <table class="ngc-table default">
+    <thead>
+      <ng-container *ngFor="let col of cols">
+        <th (click)="headerClick(col)">
+          {{col.title}}
+        </th>
+      </ng-container>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let element of collection; let index = index">
+        <ng-template [ngTemplateOutlet]="rowTemplate || rowsDefault"
+          [ngTemplateOutletContext]="{ element: element, index: index }">
+        </ng-template>
+      </ng-container>
+    </tbody>
+  </table>
+</ng-template>
+
+<!-- END TYPES -->
+
+<!-- ROW -->
+<ng-template #rowsDefault let-element="element" let-index="index">
+  <ng-container [ngTemplateOutlet]="!!cols.length ? rowByCol : rowJson"
+    [ngTemplateOutletContext]="{ element: element, index: index }"></ng-container>
+</ng-template>
+
+<ng-template #rowByCol let-element="element" let-index="index">
+  <tr>
+    <ng-container *ngFor="let col of cols">
+      <td [attr.data-title]="col.title">
+        {{element[col.bind]}}
+      </td>
+    </ng-container>
+  </tr>
+</ng-template>
+
+<ng-template #rowJson let-element="element" let-index="index">
+  <tr>
+    <td colspan="100">
+      {{index}} {{element | json}}
+    </td>
+  </tr>
+</ng-template>
+<!-- END ROW -->
+<!-- END TEMPLATES -->
