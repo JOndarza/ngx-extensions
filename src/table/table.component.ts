@@ -3,9 +3,9 @@ import {
   ContentChild,
   ContentChildren,
   Input,
+  OnInit,
   QueryList,
   TemplateRef,
-  OnInit,
 } from '@angular/core';
 
 import { ILoader } from '../commons/interfaces/ILoader.interface';
