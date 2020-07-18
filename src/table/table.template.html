@@ -1,20 +1,19 @@
-<ng-template [ngTemplateOutlet]="freezeFirstCol ? tableFreezeFirst : tableDefault">
+<ng-template [ngTemplateOutlet]="!!firstColsFreezed ? tableFreezed : tableDefault">
 </ng-template>
 
 <!-- TEMPLATES -->
 <!-- TYPES -->
-<ng-template #tableFreezeFirst>
-  FREEZE
-  <table class="ngc-table default">
+<ng-template #tableFreezed>
+  <span class="ngc-table-type">FREEZE</span>
+  <table [ngClass]="['ngc-table', class]">
     <thead>
       <ng-container *ngFor="let col of cols">
-        <th (click)="headerClick(col)">
-          {{col.title}}
-        </th>
+        <ng-template [ngTemplateOutlet]="headerDefault" [ngTemplateOutletContext]="{col: col}">
+        </ng-template>
       </ng-container>
     </thead>
     <tbody>
-      <ng-container *ngFor="let element of collection; let index = index">
+      <ng-container *ngFor="let element of data; let index = index">
         <ng-template [ngTemplateOutlet]="rowTemplate || rowsDefault"
           [ngTemplateOutletContext]="{ element: element, index: index }">
         </ng-template>
@@ -24,39 +23,74 @@
 </ng-template>
 
 <ng-template #tableDefault>
-  DEFAULT
+  <span class="ngc-table-type">DEFAULT</span>
   <table class="ngc-table default">
     <thead>
       <ng-container *ngFor="let col of cols">
-        <th (click)="headerClick(col)">
-          {{col.title}}
-        </th>
+        <ng-template [ngTemplateOutlet]="headerDefault" [ngTemplateOutletContext]="{col: col}">
+        </ng-template>
       </ng-container>
     </thead>
     <tbody>
-      <ng-container *ngFor="let element of collection; let index = index">
+      <ng-container *ngFor="let element of data; let index = index">
         <ng-template [ngTemplateOutlet]="rowTemplate || rowsDefault"
           [ngTemplateOutletContext]="{ element: element, index: index }">
         </ng-template>
       </ng-container>
     </tbody>
+    <tfoot *ngIf="!!pagination">
+      <tr>
+        <td colspan="100">
+          <ul class="ngc-table-pagination">
+            <li *ngFor="let item of pagination" [class]="item.class" (click)="page = item.value">
+              <ng-template [ngTemplateOutlet]="item.isIcon? paginationElementIcon : paginationElementDefault"
+                [ngTemplateOutletContext]="{ element: item}">
+              </ng-template>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </tfoot>
   </table>
 </ng-template>
-
 <!-- END TYPES -->
+
+<!-- HEADERS -->
+<ng-template #headerDefault let-col="col">
+  <th [class]="col.class" [class.ngc-header-sortable]="col.sortable" (click)="headerClick(col)">
+    <div class="ngc-header">
+      <!-- ICON -->
+      <div *ngIf="col.sortable" [ngClass]="['ngc-header-icon']">
+        <img [ngClass]="['sort-'+col.sort]">
+      </div>
+      <!-- TITLE -->
+      <div class="ngc-header-title">
+        {{col.title}}
+      </div>
+    </div>
+  </th>
+</ng-template>
+<!-- END HEADERS -->
 
 <!-- ROW -->
 <ng-template #rowsDefault let-element="element" let-index="index">
   <ng-container [ngTemplateOutlet]="!!cols.length ? rowByCol : rowJson"
-    [ngTemplateOutletContext]="{ element: element, index: index }"></ng-container>
+    [ngTemplateOutletContext]="{ element: element, index: index }">
+  </ng-container>
+</ng-template>
+
+<ng-template #cellByBind let-element="element" let-col="col">
+  <td [attr.data-title]="col.title">
+    {{element[col.bind]}}
+  </td>
 </ng-template>
 
 <ng-template #rowByCol let-element="element" let-index="index">
   <tr>
-    <ng-container *ngFor="let col of cols">
-      <td [attr.data-title]="col.title">
-        {{element[col.bind]}}
-      </td>
+    <ng-container *ngFor="let col of cols; let indexCol = index">
+      <ng-template [ngTemplateOutlet]="col.cellTemplate || cellByBind"
+        [ngTemplateOutletContext]="{ col: col, indexCol: indexCol, element: element, indexElement: index }">
+      </ng-template>
     </ng-container>
   </tr>
 </ng-template>
@@ -69,4 +103,15 @@
   </tr>
 </ng-template>
 <!-- END ROW -->
+
+<!-- PAGINATION -->
+<ng-template #paginationElementIcon let-element="element">
+  <img>
+</ng-template>
+
+<ng-template #paginationElementDefault let-element="element">
+  {{element.label}}
+</ng-template>
+
+<!-- END PAGINATION -->
 <!-- END TEMPLATES -->

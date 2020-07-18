@@ -4,10 +4,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgCTableColComponent } from './components/table-col.component';
 import { NgCTableComponent } from './table.component';
-import { NgCTableRowTemplateDirective } from './table.directives';
+import {
+  NgCTableRowTemplateDirective,
+  NgCTableCellTemplateDirective,
+} from './table.directives';
 
 const _components = [NgCTableComponent, NgCTableColComponent];
-const _directives = [NgCTableRowTemplateDirective];
+const _directives = [
+  NgCTableRowTemplateDirective,
+  NgCTableCellTemplateDirective,
+];
 const _declarations = [..._components, ..._directives];
 const _externs = [];
 

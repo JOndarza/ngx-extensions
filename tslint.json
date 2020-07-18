@@ -35,8 +35,7 @@
       "allow-empty-catch"
     ],
     "arrow-parens": [
-      true,
-      "ban-single-arg-parens"
+      true
     ],
     "array-type": [
       true,
